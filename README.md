@@ -156,20 +156,6 @@ NetO separates three concepts that are often mixed together:
 
 NetO therefore capability-tests every optional read instead of assuming a numeric identity level grants a feature.
 
-## Current status
-
-`0.1.0-theoretical`
-
-- read-only probing
-- assembly normalization
-- hidden-property adapter
-- snapshot state classifier
-- lightweight polling tracker
-- transition signal
-- timeline recorder
-- character profiler
-- HTML + Markdown documentation
-
 ## References
 
 - Roblox BasePart API: https://robloxapi.github.io/ref/class/BasePart.html
