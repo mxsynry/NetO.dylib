@@ -183,4 +183,4 @@ Use NetO for diagnostics, testing, compatibility research, and understanding cli
 
 ## License
 
-MPL-2.0. See `LICENSE` in the repository.
+MIT. See `LICENSE` in the repository.
