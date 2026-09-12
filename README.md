@@ -2,11 +2,7 @@
 
 **NetO Dynamic Library**
 
-**NetO** is a theoretical, read-only network-ownership and physics-observation library for Roblox research.
-
-The project is intentionally structured like a small runtime library: a root bootstrap, focused source modules, diagnostics, examples, documentation, and a generated single-file distribution target.
-
-> NetO does **not** implement RakNet, seize network ownership, bypass server authority, or claim that changing a hidden property changes native replication authority. Version 0.1 is observational by design.
+**NetO** is a theoretical, read-only network-ownership and physics-observation library for Roblox research and reanimations.
 
 ## What NetO observes
 
