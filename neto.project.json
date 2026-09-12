@@ -1,0 +1,8 @@
+{
+  "name": "NetO Dynamic Library",
+  "shortName": "NetO",
+  "version": "0.1.0-theoretical",
+  "abi": 1,
+  "target": "Roblox-Luau",
+  "mode": "read-only-observational"
+}

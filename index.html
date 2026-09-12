@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NetO Dynamic Library</title>
+<style>
+:root {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: dark;
+  background: #0d1117;
+  color: #e6edf3;
+}
+body { max-width: 980px; margin: 0 auto; padding: 48px 24px 80px; line-height: 1.55; }
+h1 { font-size: 2.25rem; margin-bottom: .2rem; }
+h2 { margin-top: 2.4rem; border-bottom: 1px solid #30363d; padding-bottom: .4rem; }
+small,.muted { color: #8b949e; }
+code,pre { background: #161b22; border: 1px solid #30363d; border-radius: 8px; }
+code { padding: .1rem .35rem; }
+pre { overflow:auto; padding: 16px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
+.card { border:1px solid #30363d; border-radius:10px; padding:16px; background:#0f141b; }
+.good { color:#7ee787; }
+.warn { color:#d29922; }
+a { color:#58a6ff; }
+table { width:100%; border-collapse:collapse; }
+th,td { border:1px solid #30363d; padding:8px; text-align:left; vertical-align:top; }
+</style>
+</head>
+<body>
+<h1>NetO Dynamic Library</h1>
+<p class="muted">0.1.0-theoretical · Roblox network-ownership / physics observation runtime</p>
+
+<p>NetO is a read-only research library for assembling client-visible physics signals into one consistent diagnostic model. It does not implement RakNet and does not claim to seize server authority.</p>
+
+<h2>Core model</h2>
+<pre><code>BasePart
+   ↓
+AssemblyRootPart
+   ↓
+┌─────────────────────────────┐
+│ NetworkOwnerV3             │ optional hidden read
+│ NetworkOwnershipRule       │ optional hidden read
+│ NetworkIsSleeping          │ optional hidden read
+│ ReceiveAge                 │ read-only observation
+│ AssemblyLinearVelocity     │ public physics state
+│ AssemblyAngularVelocity    │ public physics state
+└─────────────────────────────┘
+   ↓
+NetO Snapshot → Tracker → Timeline / Profiler</code></pre>
+
+<h2>Requirements</h2>
+<div class="grid">
+<div class="card"><strong class="good">Baseline</strong><br>Roblox Luau + BasePart assembly APIs</div>
+<div class="card"><strong>Optional</strong><br><code>gethiddenproperty</code> for full hidden-state reads</div>
+<div class="card"><strong class="warn">Not required</strong><br><code>sethiddenproperty</code>, <code>setthreadidentity</code>, <code>replicatesignal</code></div>
+</div>
+
+<h2>Quick start</h2>
+<pre><code>local NetO = loadstring(readfile("NetO.lua"))()
+
+local Players = game:GetService("Players")
+local character = Players.LocalPlayer.Character
+local root = character:FindFirstChild("HumanoidRootPart")
+
+print(NetO.FormatSnapshot(NetO.Probe(root)))</code></pre>
+
+<h2>Security metadata</h2>
+<table>
+<tr><th>Member</th><th>Current relevant metadata</th></tr>
+<tr><td>NetworkOwnerV3</td><td>Hidden, NotScriptable</td></tr>
+<tr><td>NetworkIsSleeping</td><td>Hidden, NotScriptable</td></tr>
+<tr><td>NetworkOwnershipRule</td><td>Hidden, NotScriptable</td></tr>
+<tr><td>NetworkOwnerChanged</td><td>Hidden, LocalUserSecurity</td></tr>
+<tr><td>ReceiveAge</td><td>Hidden, ReadOnly, NotReplicated</td></tr>
+<tr><td>ReplicationPV</td><td>Hidden, NotScriptable, RobloxSecurity</td></tr>
+</table>
+
+<p>NetO does not prescribe a numeric executor identity. It tests the actual capability it needs. Thread identity is diagnostic metadata only.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://robloxapi.github.io/ref/class/BasePart.html">Roblox BasePart API reference</a></li>
+<li><a href="https://docs.sunc.io/Reflection/gethiddenproperty/">sUNC gethiddenproperty</a></li>
+<li><a href="https://docs.sunc.io/Reflection/getthreadidentity/">sUNC getthreadidentity</a></li>
+<li><a href="https://docs.sunc.io/Reflection/setthreadidentity/">sUNC setthreadidentity</a></li>
+</ul>
+
+<p class="muted">Theoretical research scaffold. Hidden Roblox APIs may change without notice.</p>
+</body>
+</html>
